@@ -1,0 +1,38 @@
+---
+- name: New user is created
+  hosts: 127.0.0.1
+  become: true
+  vars:
+    username:
+      test:
+        uname: test
+        description: Test User Account
+
+    myusers:
+     - user1
+     - user2
+     - user3
+
+  tasks:
+
+    - name: Create multiple users
+      user:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ myusers }}"   
+
+    - name: Load variable from encrypted file
+      include_vars:
+              file: secret
+
+    - name: Display the encrypted variable
+      debug:
+        msg: "{{ secret }}"      
+      no_log: true
+
+    - name: User gets created
+      user: 
+        name: "{{ username['test']['uname'] }}"
+        comment: "{{ username['test']['description'] }}"
+        state: present
+ 
