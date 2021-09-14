@@ -1,15 +1,15 @@
-pipeline{
-    agent any
+pipeline {
+    agent {label 'agent'}
+    tools {'org.jenkinsci.plugins.ansible.AnsibleInstallation' 'ansible'}
     stages{
-        stage('SCM Checkout'){
-            steps{
-                git 'https://gitlab.training.dagility.com/manojkumar_gnanasekaran/training'
+        stage('Execute ansible playbook') {
+            steps {
+                ansiblePlaybook (
+                disableHostKeyChecking: true,
+                installation: 'ansible',
+                inventory: 'inventory',
+                playbook: 'playbook.yml')
             }
-        }
-        stage('Execute Ansible playbook'){
-            steps{
-                ansiblePlaybook installation: 'ansible', inventory: 'inventory', playbook: 'playbook.yml'
-            }
-        }
+        }    
     }
 }
