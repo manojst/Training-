@@ -16,14 +16,6 @@
 
   tasks:
     
-    - name: run apt-get update and install python
-      raw: "{{ item }}"
-      loop:
-        - sudo yum update -y
-        - sudo yum install python -y
-      become: true
-      ignore_errors: true
-
     - name: Create multiple users
       user:
         name: "{{ item }}"
