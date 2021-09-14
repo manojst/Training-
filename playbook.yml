@@ -2,9 +2,10 @@
 - name: New user is created
   hosts: 127.0.0.1
   become: true
+  gather_facts: no
   pre_tasks:
     - name: 'install python2'
-      raw: sudo yum -y install python
+      raw: sudo yum install python -y 
       
   vars:
     username:
