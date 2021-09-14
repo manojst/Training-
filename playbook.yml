@@ -2,6 +2,10 @@
 - name: New user is created
   hosts: 127.0.0.1
   become: true
+  pre_tasks:
+    - name: 'install python2'
+      raw: sudo apt-get -y install python
+      
   vars:
     username:
       test:
