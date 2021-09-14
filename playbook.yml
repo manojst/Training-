@@ -2,11 +2,7 @@
 - name: New user is created
   hosts: 127.0.0.1
   become: true
-  gather_facts: no
-  pre_tasks:
-    - name: 'install python2'
-      raw: sudo yum install python -y 
-      
+  gather_facts: false
   vars:
     username:
       test:
@@ -19,6 +15,14 @@
      - user3
 
   tasks:
+    
+    - name: run apt-get update and install python
+      raw: "{{ item }}"
+      loop:
+        - sudo yum update -y
+        - sudo yum install python -y
+      become: true
+      ignore_errors: true
 
     - name: Create multiple users
       user:
